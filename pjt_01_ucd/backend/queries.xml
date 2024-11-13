@@ -1,0 +1,52 @@
+<!-- queries.xml
+SQL 쿼리 구조를 저장하는 XML 파일입니다. -->
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <!-- 사용자 테이블-->
+    <query id="createUsersTable">
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE,
+            password TEXT,
+            email TEXT UNIQUE,
+            createdAt TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+        );
+    </query>
+    <!-- 물품 게시물 테이블-->
+    <query id="createItemsTable">
+        CREATE TABLE IF NOT EXISTS items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            price REAL,
+            description TEXT,
+            image TEXT,
+            createdAt TEXT,
+            sellerId INTEGER,
+            FOREIGN KEY (sellerId) REFERENCES users(id)
+        );
+    </query>
+    <!-- 판매 상태 테이블 (사용자와 물품 간의 조인 테이블)-->
+    <query id="createSalesTable">
+        CREATE TABLE IF NOT EXISTS sales (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            itemId INTEGER,
+            sellerId INTEGER,
+            buyerId INTEGER NULL, 
+            saleDate TEXT,
+            status TEXT,
+            FOREIGN KEY (itemId) REFERENCES items(id),
+            FOREIGN KEY (sellerId) REFERENCES users(id),
+            FOREIGN KEY (buyerId) REFERENCES users(id)
+        );
+    </query>
+    <!-- 추가 쿼리 정의 가능 -->
+</queries>
+
+<!--
+users 테이블: 사용자 정보를 저장하며, username과 email은 각각 고유해야 합니다.
+items 테이블: 물품 게시물 정보와 판매자(sellerId)를 포함합니다.
+sales 테이블: 게시물의 상태를 관리하는 조인 테이블로, 구매자와 판매자 정보를 함께 저장합니다.
+sellerId는 물품을 게시한 사용자(판매자)를 참조하며, NOT NULL로 필수입니다.
+buyerId는 물품을 구매한 사용자(구매자)를 참조하며, 구매자가 없을 때는 NULL 값을 허용합니다.
+ON DELETE SET NULL로 설정해, 구매자가 삭제되면 해당 필드는 NULL로 업데이트되지만 전체 레코드는 유지됩니다.
+-->
