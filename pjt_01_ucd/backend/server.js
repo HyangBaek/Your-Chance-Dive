@@ -130,9 +130,9 @@ app.post('/api/register', (req, res) => {
 
 // 사용자 로그인
 app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, row) => {
+  db.get("SELECT * FROM users WHERE email = ? AND password = ?", [email, password], (err, row) => {
     if (err) {
       console.error('Error logging in:', err.message);
       return res.status(500).json({ error: err.message });
