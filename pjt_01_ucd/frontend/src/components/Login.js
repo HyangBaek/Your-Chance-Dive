@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './style/login.css';
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -43,33 +44,37 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>로그인</h2>
+    <div className="container">
+      <div className="wrapper">
       {error && <div className="alert alert-danger">{error}</div>}
-      <div className="form-group">
-        <label htmlFor="username">사용자 이름</label>
-        <input
-          type="text"
-          className="form-control"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
+        <div className="title">
+          <span>Welcome</span>
+        </div>
+        <p className='title_para'>Please enter your details to sign in.</p>
+
+        <form onSubmit={handleSubmit}>
+          <div className="row">
+            <input type="text" placeholder="Enter your email..." 
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required />
+          </div>
+          <div className="row">
+            {/* <i className="fas fa-lock"></i> */}
+            <input type="password" placeholder="Password" 
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required />
+          </div>
+          <div className="row button">
+            <input type="submit" value="Login" />
+          </div>
+          <div className="signup-link">Not a member? <a href="/register">Signup now</a></div>
+        </form>
       </div>
-      <div className="form-group">
-        <label htmlFor="password">비밀번호</label>
-        <input
-          type="password"
-          className="form-control"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit" className="btn btn-primary">로그인</button>
-    </form>
+    </div>
   );
 };
 
