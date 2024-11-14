@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Login = ({ onLogin }) => {
 
     const loginData = {
       username,
+      email,
       password,
     };
 
