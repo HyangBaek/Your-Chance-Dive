@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import style from './style/Header.module.css';
 
 const Header = ({ user, setUser }) => {
 
@@ -18,34 +19,37 @@ const Header = ({ user, setUser }) => {
 
   return (
     <header className="header">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">중고 거래 사이트</a>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ml-auto">
-              {user ? (
-                <>
-                  <li className="nav-item">
-                  <a className="nav-link" href="/mypage"><span className="nav-link">안녕하세요, {user.username}님!</span></a>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/mypage">마이페이지</Link>
-                  </li>
-                  <li className="nav-item">
-                    <button className="btn btn-secondary nav-link" onClick={handleLogout}>로그아웃</button>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li className="nav-item">
-                    <a className="nav-link" href="/login">로그인</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" href="/register">회원가입</a>
-                  </li>
-                </>
-              )}
-            </ul>
+      <nav class="w3-top">
+        <div class="w3-bar w3-white w3-padding w3-card">
+          <div class="w3-col s4">
+            <a href="/" class="w3-bar-item w3-button"><b>숨참고</b> <span class="w3-text-gray">보물 같은 중고 거래의 깊이 있는 발견</span></a>
+          </div>
+          <div class="w3-col s4">
+          {user ? (
+            <div class="w3-container">
+              <form>
+                <fieldset class="w3-input w3-border w3-left" >
+                  <input class="w3-input w3-left" style={{width:'90%'}} type="text" placeholder="관심 있는 물건을 검색해보세요"></input><a href="#plans" class="w3-button"> <i class='fa fa-search'></i></a>
+                </fieldset>
+              </form>
+            </div>
+          ) : (
+            <>
+            </>
+          )} 
+        </div>
+        <div class="w3-right">
+        {user ? (
+          <>
+          <a href="/mypage" class="w3-bar-item w3-button">안녕하세요, {user.username} 님!</a>
+          <button className="btn btn-secondary nav-link" onClick={handleLogout}>로그아웃</button>
+          </>
+          ) : (
+            <>
+          <a href="/login" class="w3-bar-item w3-button">로그인</a>
+          <a href="/register" class="w3-bar-item w3-button">회원가입</a>
+              </>
+          )}
           </div>
         </div>
       </nav>

@@ -1,0 +1,21 @@
+@import url('https://www.w3schools.com/w3css/4/w3.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+.searchContainer {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.searchContainer input[type="text"] {
+    width: 100%;
+    padding: 10px 40px 10px 10px;
+    box-sizing: border-box;
+}
+
+.searchContainer .fa-search {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    fill: #aaa;
+}
