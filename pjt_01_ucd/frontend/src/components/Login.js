@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './style/login.css';
+import style from './style/Login.module.css';
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -44,23 +44,24 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="container">
-      <div className="wrapper">
+    <div className={style}>
+    <div className={style.container}>
+      <div className={style.wrapper}>
       {error && <div className="alert alert-danger">{error}</div>}
-        <div className="title">
+        <div className={style.title}>
           <span>Welcome</span>
         </div>
-        <p className='title_para'>Please enter your details to sign in.</p>
+        <p className={style.title_para}>Please enter your details to sign in.</p>
 
         <form onSubmit={handleSubmit}>
-          <div className="row">
+          <div className={style.row}>
             <input type="text" placeholder="Enter your email..." 
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required />
           </div>
-          <div className="row">
+          <div className={style.row}>
             {/* <i className="fas fa-lock"></i> */}
             <input type="password" placeholder="Password" 
             id="password"
@@ -68,12 +69,13 @@ const Login = ({ onLogin }) => {
             onChange={(e) => setPassword(e.target.value)}
             required />
           </div>
-          <div className="row button">
+          <div className={style.row}>
             <input type="submit" value="Login" />
           </div>
-          <div className="signup-link">Not a member? <a href="/register">Signup now</a></div>
+          <div className={style.signuplink}>Not a member? <a href="/register">Signup now</a></div>
         </form>
       </div>
+    </div>
     </div>
   );
 };
