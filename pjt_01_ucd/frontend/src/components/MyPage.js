@@ -1,14 +1,19 @@
 // MyPage.js
-import React, { useState, useEffect } from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { hideParentElement } from './scripts/hide.js';
+import style from './style/MyPage.module.css';
 
 const MyPage = ({ user, setUser }) => {
     const [userInfo, setUserInfo] = useState(null);
     const [userSales, setUserSales] = useState([]);
     const [userPurchases, setUserPurchases] = useState([]);
+    const [activeTab, setActiveTab] = useState('Tab1');
+    const spanRef = useRef(null);
 
     useEffect(() => {
+      setActiveTab('Tab1'); // 기본적으로 첫 번째 탭을 활성화합니다.
+
         if (user) {
             console.log("User:", user); // 로그로 user 객체 확인
             //fetchUserInfo();
@@ -16,33 +21,8 @@ const MyPage = ({ user, setUser }) => {
     }, [user]);
   
     // 사용자 정보 가져오기
-/*    const fetchUserInfo = async () => {
-        if (!user || !user.id) return; // user 또는 user.id가 없으면 함수 종료
-        
-        try {
-            const userToken = localStorage.getItem('token'); // 로그인 시 저장된 토큰 가져오기
+    // user에 있는 정보 사용
 
-            const response = await fetch(`http://localhost:3000/api/users?=${user.id}`, {
-                method: 'GET', // 기본이므로 생략 가능
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userToken}`, // 인증 토큰 포함
-                },
-            });
-
-        if (!response.ok) {
-            console.error(`Error fetching user purchases: ${response.status} - ${response.statusText}`);
-            return;
-        }
-      
-        const data = await response.json();
-        console.log('Fetched data:', data);
-        setUserInfo(data); // 사용자 정보를 상태로 저장
-        } catch (error) {
-            console.error('Error fetching user info:', error);
-        }
-    };
-*/
     // 사용자 판매 내역 가져오기
     const fetchUserSales = async () => {
         try {
@@ -64,41 +44,202 @@ const MyPage = ({ user, setUser }) => {
             console.error('Error fetching user purchases:', error);
         }
     };
-
+  const TabLink = ({ linkName, setActiveTab, children }) => {
+    const handleClick = (evt) => { setActiveTab(linkName); };
+    return (
+      <button className="tablink w3-button w3-block w3-theme-l1 w3-left-align" onClick={handleClick}><i className="fa fa-circle-o-notch fa-fw w3-margin-right"></i> {children} </button>
+    );
+  };
+  const TabContent = ({ linkName, activeTab, children }) => (
+    <div id={linkName} className="myLink" style={{ display: activeTab === linkName ? 'block' : 'none' }}> {children}
+    </div>
+  );
     return (
         <>
-          <div>
-            <h2>사용자 정보</h2>
-            {user ? (
-              <div>
-                <p>이름: {user.username}</p>
-                <p>이메일: {user.email}</p>
+      <div className={style}>
+        <div className="w3-container w3-content" style={{ maxWidth: '1400px', marginTop: '80px' }}>
+          <div className="w3-row">
+            <div className="w3-col m3">
+              <div className="w3-card w3-round w3-white">
+                <br />
+                <h4 className="w3-center">My Page</h4>
+                <br />
+                <div className="w3-card w3-round">
+                  <div className="w3-white">
+                    <button className="w3-button w3-block w3-theme-l1 w3-left-align">
+                      <i className="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Profile
+                    </button>
+                    <button className="w3-button w3-block w3-theme-l1 w3-left-align">
+                      <i className="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events
+                    </button>
+                    <button className="w3-button w3-block w3-theme-l1 w3-left-align">
+                      <i className="fa fa-users fa-fw w3-margin-right"></i> My Message
+                    </button>
+                  </div>
+                </div>
               </div>
-            ) : (
-              <p>사용자 정보를 가져오는 중...</p>
-            )}
-        
-            <h2>판매 내역</h2>
-            {userSales.length > 0 ? (
-              <ul>
-                {userSales.map((sale) => (
-                  <li key={sale.id}>{sale.itemName} - {sale.price}원</li>
-                ))}
-              </ul>
-            ) : (
-              <p>판매 내역이 없습니다.</p>
-            )}
+              <br />
+              <div className="w3-card w3-round w3-white w3-hide-small">
+                <div className="w3-container">
+                  <br />
+                  <p>Interests</p>
+                  <p>
+                    <span className="w3-tag w3-small w3-theme-d5">JavaScript</span>
+                    <span className="w3-tag w3-small w3-theme-d4">Python</span>
+                    <span className="w3-tag w3-small w3-theme-d3">HTML</span>
+                    <span className="w3-tag w3-small w3-theme-d2">CSS</span>
+                    <span className="w3-tag w3-small w3-theme-d1">AI</span>
+                    <span className="w3-tag w3-small w3-theme">빅데이터</span>
+                    <span className="w3-tag w3-small w3-theme-l1">컴퓨터일반</span>
+                    <span className="w3-tag w3-small w3-theme-l2">통계학</span>
+                    <span className="w3-tag w3-small w3-theme-l3">데이터베이스</span>
+                    <span className="w3-tag w3-small w3-theme-l4">JSP</span>
+                    <span className="w3-tag w3-small w3-theme-l5">AWS</span>
+                  </p>
+                </div>
+              </div>
+              <br />
+              <div className="w3-container w3-display-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
+                <span ref={spanRef} onClick={() => { hideParentElement(spanRef) }} className="w3-button w3-theme-l3 w3-display-topright">
+                  <i className="fa fa-remove"></i>
+                </span>
+                <br />
+                <p><strong>Hey!</strong></p>
+                <p>People are looking at your profile. Find out who.</p>
+              </div>
+              <div className="w3-card w3-round w3-white">
+                <div className="w3-card w3-round">
+                  <div className="w3-white">
+                    <TabLink linkName="Tab1" setActiveTab={setActiveTab}>판매 중인 상품</TabLink>
+                    <TabLink linkName="Tab2" setActiveTab={setActiveTab}>예약 중인 상품</TabLink>
+                    <TabLink linkName="Tab3" setActiveTab={setActiveTab}>구매 완료 상품</TabLink>
+                    <TabLink linkName="Tab4" setActiveTab={setActiveTab}>판매 완료 상품</TabLink>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            <h2>구매 내역</h2>
-            {userPurchases.length > 0 ? (
-              <ul>
-                {userPurchases.map((purchase) => (
-                  <li key={purchase.id}>{purchase.itemName} - {purchase.price}원</li>
+            <div className="w3-col m7">
+              <div className="w3-row-padding">
+                <div className="w3-col m12">
+                  <div className="w3-card w3-round w3-white w3-hide-small">
+                    <div className="w3-container w3-padding">
+                      <div className="w3-container">
+                        <p className="w3-center"><br /><img src="https://www.w3schools.com/w3images/avatar3.png" className="w3-circle" style={{ height: '106px', width: '106px' }} alt="Avatar" /></p>
+                      </div>
+                      <h6 className="w3-opacity">한 줄 소개</h6>
+                      <p contentEditable="true" suppressContentEditableWarning={true} className="w3-border w3-padding">Status: Feeling Blue</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="w3-card w3-white w3-round w3-margin">
+                <div className="btn-group">
+                  <button className={style.button}>거래 완료 0 건</button>
+                  <button className={style.button}>판매 중 5 건</button>
+                  <button className={style.button}>거래 중 3 건</button>
+                  <button className={style.button}>거래 취소 10건</button>
+                </div>
+              </div>
+
+              <div className="w3-container w3-card w3-white w3-round w3-margin"><br />
+                <TabContent linkName="Tab1" activeTab={activeTab}>
+                  <div className="w3-container">
+                    <h6>판매 중인 상품</h6>
+                    <br />
+                    <table className="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+                      <thead><tr><th>상품명</th><th>가격</th></tr></thead>
+                      <tbody>
+                        {userSales.length > 0 ? (
+                          <>
+                            {userSales.map((sale) => (
+                              <tr>
+                                <td key={sale.id}>{sale.itemName}</td><td>{sale.itemPrice}원</td>
+                              </tr>
+                            ))}
+                          </>
+                        ) : (
+                          <tr><td colSpan="2">판매 내역이 없습니다.</td></tr>
+                        )}
+                      </tbody>
+                    </table><br />
+                    <button className="w3-button w3-dark-grey">More <i className="fa fa-arrow-right"></i></button>
+                  </div>
+                </TabContent>
+                <TabContent linkName="Tab2" activeTab={activeTab}>
+                  <div className="w3-container">
+                    <h6>예약 중인 상품</h6>
+                    <br />
+                    <table className="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+                      <thead><tr><th>상품명</th><th>가격</th></tr></thead>
+                      <tbody>
+            {userSales.length > 0 ? (
+                          <>
+                {userSales.map((sale) => (
+                              <tr>
+                                <td key={sale.id}>{sale.itemName}</td><td>{sale.itemPrice}원</td>
+                              </tr>
                 ))}
-              </ul>
+                          </>
             ) : (
-              <p>구매 내역이 없습니다.</p>
+                          <tr><td colSpan="2">요청 내역이 없습니다.</td></tr>
             )}
+                      </tbody>
+                    </table><br />
+                    <button className="w3-button w3-dark-grey">More <i className="fa fa-arrow-right"></i></button>
+                  </div>
+                </TabContent>
+                <TabContent linkName="Tab3" activeTab={activeTab}>
+                  <div className="w3-container">
+                    <h6>구매 완료 상품</h6>
+                    <br />
+                    <table className="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+                      <thead><tr><th>상품명</th><th>가격</th></tr></thead>
+                      <tbody>
+                        {userSales.length > 0 ? (
+                          <>
+                            {userSales.map((sale) => (
+                              <tr>
+                                <td key={sale.id}>{sale.itemName}</td><td>{sale.itemPrice}원</td>
+                              </tr>
+                            ))}
+                          </>
+                        ) : (
+                          <tr><td colSpan="2">구매 내역이 없습니다.</td></tr>
+                        )}
+                      </tbody>
+                    </table><br />
+                    <button className="w3-button w3-dark-grey">More <i className="fa fa-arrow-right"></i></button>
+                  </div>
+                </TabContent>
+                <TabContent linkName="Tab4" activeTab={activeTab}>
+                  <div className="w3-container">
+                    <h6>판매 완료 상품</h6>
+                    <br />
+                    <table className="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
+                      <thead><tr><th>상품명</th><th>가격</th></tr></thead>
+                      <tbody>
+                        {userSales.length > 0 ? (
+                          <>
+                            {userSales.map((sale) => (
+                              <tr>
+                                <td key={sale.id}>{sale.itemName}</td><td>{sale.itemPrice}원</td>
+                              </tr>
+                ))}
+                          </>
+            ) : (
+                          <tr><td colSpan="2">판매 완료 내역 없습니다.</td></tr>
+            )}
+                      </tbody>
+                    </table><br />
+                    <button className="w3-button w3-dark-grey">More <i className="fa fa-arrow-right"></i></button>
+                  </div>
+                </TabContent>
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
     </>
   );
