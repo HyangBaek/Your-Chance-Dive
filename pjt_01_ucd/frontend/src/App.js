@@ -10,6 +10,7 @@ import MyPage from "./components/MyPage";
 import ItemForm from "./components/ItemForm"; // item 등록
 import ItemDetail from "./components/ItemDetail"; // item 조회
 import AboutPage from "./components/AboutPage";
+import SearchPage from './components/SearchPage';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -34,6 +35,7 @@ function App() {
               path="/mypage"
               element={<MyPage user={user} setUser={setUser} />}
             />
+            <Route path="/search" element={<SearchPage user={user} setUser={setUser} />} />
             <Route path="/introduce" element={<AboutPage />} />{" "}
           </Routes>
         </main>
