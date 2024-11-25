@@ -42,11 +42,8 @@ const SearchPage = ({ user, setUser }) => {
 
       {message && <p>{message}</p>}
 
-      <ul>
-        {results.map((item, index) => (
-          <li key={index}>{item.name}<br />{item.description}</li>
-        ))}
-      </ul>
+
+
       {/* <!-- Page Container --> */}
       <div className="w3-content w3-margin-top" style={{ maxWidth: '1400px' }}>
 
@@ -77,16 +74,20 @@ const SearchPage = ({ user, setUser }) => {
 
           {/* <!-- Right Column --> */}
           <div className="w3-twothird">
-
+            {message && <p>{message}
+            </p>}
+            {results.map((item, index) => (
+              <>
             <div className="w3-container w3-card w3-white w3-margin-bottom">
               <h2 className="w3-text-grey w3-padding-16"><i className="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>도서 이름</h2>
               <div className="w3-container">
                 <h4 className="w3-opacity"><b>10000원</b></h4>
                 <h5 className="w3-text-teal">지은이</h5>
-                <p>설명....</p>
+                <p>{item.description}</p>
               </div>
             </div>
-
+              </>
+            ))}
             {/* <!-- End Right Column --> */}
           </div>
 
