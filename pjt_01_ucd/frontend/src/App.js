@@ -31,6 +31,7 @@ function App() {
               element={<Login onLogin={(data) => setUser(data)} />}
             />
             <Route path="/items/:id" element={<ItemDetail user={user} />} />
+            <Route path="/additem" element={<ItemForm user={user} />} />
             <Route
               path="/mypage"
               element={<MyPage user={user} setUser={setUser} />}
