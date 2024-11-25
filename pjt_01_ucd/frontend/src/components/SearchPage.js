@@ -10,6 +10,21 @@ const SearchPage = ({ user, setUser }) => {
     setMessage('검색어를 입력해주세요');
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        handleSearch();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [query]);
+
+
   const handleSearch = async () => {
     if (query.trim() === '') {
       setMessage('검색어를 입력해주세요');
