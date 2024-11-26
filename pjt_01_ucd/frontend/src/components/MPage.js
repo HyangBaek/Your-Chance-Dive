@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hideParentElement } from './scripts/hide.js';
-import style from './style/MyPage.module.css';
 import ItemList from './ItemList';
 import ItemForm from './ItemForm';
 

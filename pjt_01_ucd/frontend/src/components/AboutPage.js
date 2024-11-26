@@ -1,67 +1,15 @@
 // AboutPage.js
 import React from "react";
+import './style/AboutPage.css';
 
 const AboutPage = () => {
   return (
     <>
-      {/* Navigation */}
-      <nav
-        className="navbar navbar-expand-lg navbar-dark fixed-top"
-        id="mainNav"
-      >
-        <div className="container">
-          <a className="navbar-brand" href="#page-top">
-            <img src="assets/img/navbar-logo.svg" alt="Logo" />
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarResponsive"
-            aria-controls="navbarResponsive"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            Menu
-            <i className="fas fa-bars ms-1"></i>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarResponsive">
-            <ul className="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-              <li className="nav-item">
-                <a className="nav-link" href="#services">
-                  Services
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#portfolio">
-                  Portfolio
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#about">
-                  About
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#team">
-                  Team
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#contact">
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
       {/* Masthead */}
       <header className="masthead">
         <div className="container">
           <div className="masthead-subheading">Welcome To Our Site!</div>
-          <div className="masthead-heading text-uppercase">중고거래 사이트</div>
+          <div className="masthead-heading text-uppercase">교재 중고 거래 사이트</div>
           <a className="btn btn-primary btn-xl text-uppercase" href="#services">
             Tell Me More
           </a>
@@ -82,7 +30,7 @@ const AboutPage = () => {
               </span>
               <h4 className="my-3">Used Textbook Trading</h4>
               <p className="text-muted">
-                중고교재를 보다 더 간편하고 싸게 구매가능합니다.
+                중고 교재를 보다 더 간편하고 싸게 구매 가능합니다
               </p>
             </div>
             <div className="col-md-4">
@@ -92,7 +40,7 @@ const AboutPage = () => {
               </span>
               <h4 className="my-3">Easy Online Purchase</h4>
               <p className="text-muted">
-                인터넷을 통한 구매로 어디서나 언제나 이용가능
+                인터넷을 통한 구매로 어디서나 언제나 이용 가능
               </p>
             </div>
             <div className="col-md-4">
@@ -112,36 +60,77 @@ const AboutPage = () => {
         <div className="container">
           <div className="text-center">
             <h2 className="section-heading text-uppercase">About</h2>
+            <h3 className="section-subheading text-muted">사이트 알아보기</h3>
           </div>
           <ul className="timeline">
+            <h4>숨참고 유찬 Dive</h4><br />
             <li>
               <div className="timeline-image">
-                <img
-                  className="rounded-circle img-fluid"
-                  src="assets/img/about/1.jpg"
-                  alt="..."
-                />
+                <span className="fa-stack fa-5x">
+                  <i className="fas fa-solid fa-users fa-stack-1x w3-hide-medium"></i>
+                </span>
               </div>
+
               <div className="timeline-panel">
                 <div className="timeline-heading">
-                  <h4>팀명</h4>
-                  <h4 className="subheading">숨참고 유찬 Dive</h4>
+                  <p className="text-muted">
+                    팀명
+                  </p>
+                  <h4 className="subheading">유찬 Dive</h4>
                 </div>
                 <div className="timeline-body">
                   <p className="text-muted">
-                    유찬다이브(YouChan Dive): 유저에게 찬스를 제공하며, 중고
-                    거래의 세계를 탐험하도록 돕습니다.
+                    유찬다이브(YouChan Dive)<br />
+                    유저에게 찬스를 제공하며, <br />
+                    중고 거래의 세계를 탐험하도록 돕습니다
                   </p>
                 </div>
               </div>
             </li>
-            {/* 추가적인 타임라인 항목 생략 */}
+            <li className="timeline-inverted">
+              <div className="timeline-image ">
+                <span className="fa-stack fa-5x">
+                  <i className="fas fa-regular fa-thumbs-up fa-stack-1x w3-hide-medium"></i>
+                </span>
+              </div>
+              <div className="timeline-panel">
+                <div className="timeline-heading">
+                  <p className="text-muted">
+                    프로젝트명
+                  </p>
+                  <h4>숨참고</h4>
+                </div>
+                <div className="timeline-body">
+                  <p className="text-muted">
+                    숨겨둔 보물 같은<br />중고 거래의 가치 있는 깊이 있는 발견을 의미합니다<br /><br />
+                    사용자가 좋은 중고 물품을 찾아낼 때<br />
+                    마치 물속으로 깊이 다이빙하듯, 신중하게 탐색하며<br />
+                    숨을 고르게 만드는 경험을 상징하죠<br /><br />
+                    이 플랫폼에서는 누구나 숨을 참고 보물을 찾듯<br />
+                    각 제품의 가치를 새롭게 발견할 수 있습니다<br /><br />
+                    이를 통해 "숨참고"는 단순한 중고 거래를 넘어<br />
+                    가치 있는 발견의 즐거움을 제공하는 공간을 지향합니다
+                  </p>
+                </div>
+              </div>
+            </li>
+            <li className="timeline-inverted">
+              <div className="timeline-image">
+                <h4>
+                  Be Part
+                  <br />
+                  Of Our
+                  <br />
+                  Story!
+                </h4>
+              </div>
+            </li>
           </ul>
         </div>
       </section>
 
       {/* Contact */}
-      <section className="page-section" id="contact">
+      {/* <section className="page-section" id="contact">
         <div className="container">
           <div className="text-center">
             <h2 className="section-heading text-uppercase">Contact Us</h2>
@@ -158,12 +147,14 @@ const AboutPage = () => {
                   type="text"
                   placeholder="Your Name *"
                 />
+                <br />
                 <input
                   className="form-control"
                   id="email"
                   type="email"
                   placeholder="Your Email *"
                 />
+                <br />
                 <input
                   className="form-control"
                   id="phone"
@@ -171,6 +162,7 @@ const AboutPage = () => {
                   placeholder="Your Phone *"
                 />
               </div>
+              <br />
               <div className="col-md-6">
                 <textarea
                   className="form-control"
@@ -189,7 +181,7 @@ const AboutPage = () => {
             </div>
           </form>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };
