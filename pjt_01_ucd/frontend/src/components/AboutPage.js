@@ -5,9 +5,6 @@ import './style/AboutPage.css';
 const AboutPage = () => {
   return (
     <>
-      {/* Navigation */}
-      <br /><br /><br /><br />
-
       {/* Masthead */}
       <header className="masthead">
         <div className="container">
@@ -63,16 +60,17 @@ const AboutPage = () => {
         <div className="container">
           <div className="text-center">
             <h2 className="section-heading text-uppercase">About</h2>
-            <h3 class="section-subheading text-muted">사이트 알아보기</h3>
+            <h3 className="section-subheading text-muted">사이트 알아보기</h3>
           </div>
           <ul className="timeline">
+            <h4>숨참고 유찬 Dive</h4><br />
             <li>
               <div className="timeline-image">
                 <span className="fa-stack fa-5x">
-                  <i className="fas fa-solid fa-users fa-stack-1x fa-inverse"></i>
+                  <i className="fas fa-solid fa-users fa-stack-1x w3-hide-medium"></i>
                 </span>
               </div>
-              <h4>숨참고 유찬 Dive</h4>
+
               <div className="timeline-panel">
                 <div className="timeline-heading">
                   <p className="text-muted">
@@ -92,7 +90,7 @@ const AboutPage = () => {
             <li className="timeline-inverted">
               <div className="timeline-image ">
                 <span className="fa-stack fa-5x">
-                  <i className="fas fa-regular fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                  <i className="fas fa-regular fa-thumbs-up fa-stack-1x w3-hide-medium"></i>
                 </span>
               </div>
               <div className="timeline-panel">
@@ -104,14 +102,14 @@ const AboutPage = () => {
                 </div>
                 <div className="timeline-body">
                   <p className="text-muted">
-                  숨겨둔 보물 같은<br />중고 거래의 가치 있는 깊이 있는 발견을 의미합니다<br /><br />
-                  사용자가 좋은 중고 물품을 찾아낼 때<br />
-                  마치 물속으로 깊이 다이빙하듯, 신중하게 탐색하며<br />
-                  숨을 고르게 만드는 경험을 상징하죠<br /><br />
-                  이 플랫폼에서는 누구나 숨을 참고 보물을 찾듯<br />
-                  각 제품의 가치를 새롭게 발견할 수 있습니다<br /><br />
-                  이를 통해 "숨참고"는 단순한 중고 거래를 넘어<br />
-                  가치 있는 발견의 즐거움을 제공하는 공간을 지향합니다
+                    숨겨둔 보물 같은<br />중고 거래의 가치 있는 깊이 있는 발견을 의미합니다<br /><br />
+                    사용자가 좋은 중고 물품을 찾아낼 때<br />
+                    마치 물속으로 깊이 다이빙하듯, 신중하게 탐색하며<br />
+                    숨을 고르게 만드는 경험을 상징하죠<br /><br />
+                    이 플랫폼에서는 누구나 숨을 참고 보물을 찾듯<br />
+                    각 제품의 가치를 새롭게 발견할 수 있습니다<br /><br />
+                    이를 통해 "숨참고"는 단순한 중고 거래를 넘어<br />
+                    가치 있는 발견의 즐거움을 제공하는 공간을 지향합니다
                   </p>
                 </div>
               </div>
@@ -132,7 +130,7 @@ const AboutPage = () => {
       </section>
 
       {/* Contact */}
-      <section className="page-section" id="contact">
+      {/* <section className="page-section" id="contact">
         <div className="container">
           <div className="text-center">
             <h2 className="section-heading text-uppercase">Contact Us</h2>
@@ -149,12 +147,14 @@ const AboutPage = () => {
                   type="text"
                   placeholder="Your Name *"
                 />
+                <br />
                 <input
                   className="form-control"
                   id="email"
                   type="email"
                   placeholder="Your Email *"
                 />
+                <br />
                 <input
                   className="form-control"
                   id="phone"
@@ -162,6 +162,7 @@ const AboutPage = () => {
                   placeholder="Your Phone *"
                 />
               </div>
+              <br />
               <div className="col-md-6">
                 <textarea
                   className="form-control"
@@ -180,7 +181,7 @@ const AboutPage = () => {
             </div>
           </form>
         </div>
-      </section>
+      </section> */}
     </>
   );
 };
