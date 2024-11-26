@@ -3,11 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { hideParentElement } from './scripts/hide.js';
 import ItemList from './ItemList.js';
 import ItemForm from './ItemForm.js';
-
-
+import Slider from './Slider.js';
 
 const MainPage = ({ user, setUser }) => {
-
   const [userInfo, setUserInfo] = useState(null);
   const [userSales, setUserSales] = useState([]);
   const [userPurchases, setUserPurchases] = useState([]);
@@ -17,8 +15,6 @@ const MainPage = ({ user, setUser }) => {
   const [currentItem, setCurrentItem] = useState(null);
   const [view, setView] = useState('items');
   useEffect(() => {
-
-
     setActiveTab('Tab1'); // 기본적으로 첫 번째 탭을 활성화합니다.
 
     if (user) {
@@ -26,7 +22,6 @@ const MainPage = ({ user, setUser }) => {
       //fetchUserInfo();
     }
   }, [user]);
-
 
   // 사용자 정보 가져오기
   // user에 있는 정보 사용
@@ -102,14 +97,10 @@ const MainPage = ({ user, setUser }) => {
             <i className="fa fa-circle-o-notch fa-fw w3-margin-right"></i> 스전
           </a></li>
         </ul></div>
-      <div className="w3-card w3-round" style={{ width: '100%', height: '350px', marginTop: '30px', backgroundColor: 'grey' }}>
-      </div>
+      <Slider /> {/* Slider 컴포넌트를 사용합니다. */}
 
       <div className="w3-card w3-round" style={{ width: '100%', marginTop: '30px' }}>
-
-
         <p className="  w3-left" style={{ Float: 'left', width: '48%', maxWidth: '48%', backgroundColor: 'grey', position: 'left' }}>
-
           <TabLink linkName="Tab1" setActiveTab={setActiveTab}>판매 중인 상품</TabLink>
           <TabContent linkName="Tab1" activeTab={activeTab}>
             <div className="w3-container">
@@ -164,31 +155,6 @@ const MainPage = ({ user, setUser }) => {
               <button className="w3-button w3-dark-grey">More <i className="fa fa-arrow-right"></i></button>
             </div>
           </TabContent>
-
-        </div>
-      </div>
-      <div className="w3-container w3-content" style={{ width: '90%', marginTop: '80px' }}>
-        <div className="w3-row m3">
-          <div className="w3-col ">
-            <div className="w3-card w3-round w3-white">
-              <br />
-              <h4 className="w3-center">Main Page</h4>
-              <br />
-              <div className="w3-card w3-round">
-                <div className="w3-white">
-                  <button className="w3-button w3-block w3-theme-l1 w3-left-align">
-                    <i className="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Profile
-                  </button>
-                  <button className="w3-button w3-block w3-theme-l1 w3-left-align">
-                    <i className="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events
-                  </button>
-                  <button className="w3-button w3-block w3-theme-l1 w3-left-align">
-                    <i className="fa fa-users fa-fw w3-margin-right"></i> My Message
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

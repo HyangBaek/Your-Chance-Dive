@@ -1,0 +1,19 @@
+.slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.images {
+    display: flex;
+    width: 100%;
+    transition: left 1s;
+}
+
+.image {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+    object-fit: cover; /* 이미지가 컨테이너를 꽉 채우도록 설정 */
+}
