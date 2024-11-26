@@ -3,6 +3,7 @@ import ItemForm from './ItemForm';
 import ItemList from './ItemList';
 import Login from './Login'; // 로그인 컴포넌트 임포트
 import MyPage from './MyPage';
+import MainPage from '../components/MainPage';
 
 const Main = ({ user, setUser }) => {
   const [items, setItems] = useState([]);
@@ -23,7 +24,7 @@ const Main = ({ user, setUser }) => {
 
     fetchItems();
   }, []);
-  
+
   const handleLogin = (data) => {
     const userData = JSON.parse(atob(data.token.split('.')[1])); // JWT에서 사용자 정보를 추출
     setUser(userData);
@@ -71,11 +72,12 @@ const Main = ({ user, setUser }) => {
   };
 
   return (
-    <div>
+    <div className="w3-container w3-content" style={{ maxWidth: '1100px', marginTop: '80px' }}>
       {user ? (
         <>
+          <MainPage /> {/* Slider 컴포넌트를 사용합니다. */}
           <button className="btn btn-primary" onClick={() => setView('items')}>물품 목록 보기</button>
-          
+
           {view === 'items' && (
             <>
               {user && <ItemForm onAddItem={handleAddItem} currentItem={currentItem} />}
