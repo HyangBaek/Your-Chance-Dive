@@ -251,6 +251,24 @@ app.get('/api/sales', (req, res) => {
   });
 });
 
+// 검색
+app.get('/api/search', (req, res) => {
+  const query = req.query.q;
+  const sql = `
+    SELECT * FROM items
+    WHERE name LIKE '%' || ? || '%'
+       OR description LIKE '%' || ? || '%'
+  `;
+  db.all(sql, [query, query], (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    console.log('row:', rows);
+    res.json(rows);
+  });
+})
+
 // 서버 시작
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
