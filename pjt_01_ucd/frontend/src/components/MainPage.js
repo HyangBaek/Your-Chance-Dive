@@ -56,7 +56,6 @@ const MainPage = ({ user, setUser }) => {
     }
   };
 
-  fetchItems();
   const handleUpdateStatus = async (itemId, status) => {
     try {
       const response = await fetch('http://localhost:3000/api/sales', {
