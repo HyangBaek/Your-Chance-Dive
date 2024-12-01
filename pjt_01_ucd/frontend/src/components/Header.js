@@ -35,8 +35,19 @@ const Header = ({ user, setUser }) => {
           <div className="w3-col s4">
             {user ? (
               <div className="w3-container w3-center">
-                <form>
-                  <input style={{ width: '90%', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px', fontSize: '15px', backgroundColor: 'white', backgroundImage: `url(${searchIcon})`, backgroundPosition: '95% 12px', backgroundRepeat: 'no-repeat', padding: '12px 20px 12px 20px', transition: 'width 0.4s ease-in-out', }} type="text" placeholder="관심 있는 물건을 검색해보세요"></input><a href="#plans" className="w3-button"></a>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const query = e.target.elements.search.value; // 검색어 추출
+                    window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                  }}
+                >
+                  <input
+                    type="text"
+                    name="search"
+                    placeholder="관심 있는 물건을 검색해보세요"
+                    style={{ width: '90%', boxSizing: 'border-box', border: '1px solid #ccc', borderRadius: '4px', fontSize: '15px', backgroundColor: 'white', backgroundImage: `url(${searchIcon})`, backgroundPosition: '95% 12px', backgroundRepeat: 'no-repeat', padding: '12px 20px 12px 20px', transition: 'width 0.4s ease-in-out', }}
+                    />
                 </form>
               </div>
             ) : (
