@@ -59,7 +59,7 @@ const Header = ({ user, setUser }) => {
             {user ? (
               <>
                 <a href="/mypage" className="w3-bar-item w3-button" onClick={handleGoToMyPage}>안녕하세요, {user.username} 님!</a>
-                <button className="btn btn-secondary nav-link w3-white" onClick={handleLogout} style={{ 'margin-right': '50px' }}>로그아웃</button>
+                <button className="btn btn-secondary nav-link w3-white" onClick={handleLogout} style={{ 'marginRight': '50px' }}>로그아웃</button>
               </>
             ) : (
               <>
