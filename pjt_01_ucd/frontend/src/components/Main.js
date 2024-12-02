@@ -1,24 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ItemForm from './ItemForm';
 import ItemList from './ItemList';
+import BookForm from './BookForm';
+import BookList from './BookList';
 import Login from './Login'; // 로그인 컴포넌트 임포트
 import MyPage from './MyPage';
 import MainPage from '../components/MainPage';
 
 const Main = ({ user, setUser }) => {
   const [items, setItems] = useState([]);
+  const [books, setBooks] = useState([]);
   const [currentItem, setCurrentItem] = useState(null);
-  const [view, setView] = useState('items'); // 새로운 상태 추가
+  const [currentBook, setCurrentBook] = useState(null);
+  const [view, setView] = useState(['items', 'items']); // 새로운 상태 추가
+  const navigate = useNavigate();
+  console.log('Main Component - user:', user);
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/items');
-        const data = await response.json();
-        console.log('Fetched items:', data); // 로그 추가 
-        setItems(data);
+        const responses = await Promise.all([
+          fetch('http://localhost:3000/api/items'),
+          fetch('http://localhost:3000/api/books')
+        ]);
+        // 각 응답을 JSON으로 변환
+        const [itemsData, booksData] = await Promise.all(
+          responses.map(response => response.json()));
+        // 상태 업데이트
+        setItems(itemsData);
+        setBooks(booksData);
+        console.log('Fetched items ok'); // 로그 추가 
       } catch (error) {
-        console.error('Error fetching items:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
@@ -38,6 +52,10 @@ const Main = ({ user, setUser }) => {
 
   const handleAddItem = (newItem) => {
     setItems([...items, newItem]);
+  };
+
+  const handleAddBook = (newBook) => {
+    setBooks([...books, newBook]);
   };
 
   const handleEditItem = (item) => {
@@ -76,19 +94,20 @@ const Main = ({ user, setUser }) => {
       {user ? (
         <>
           <MainPage /> {/* Slider 컴포넌트를 사용합니다. */}
-          <button className="btn btn-primary" onClick={() => setView('items')}>물품 목록 보기</button>
-
-          {view === 'items' && (
-            <>
-              {user && <ItemForm onAddItem={handleAddItem} currentItem={currentItem} />}
-              <ItemList items={items} user={user} onUpdateStatus={handleUpdateStatus} />
-            </>
-          )}
-
         </>
       ) : (
         <Login onLogin={handleLogin} />
       )}
+      {/* <button className="btn btn-primary" onClick={() => setView('items')}>물품 목록 보기</button> */}
+
+      {/* {view === 'items' && (
+        <>
+          {user && <ItemForm onAddItem={handleAddItem} currentItem={currentItem} />}
+          <ItemList items={items} user={user} onUpdateStatus={handleUpdateStatus} />
+        </>
+      )} */}
+      {/* <ItemList items={items} user={user} onUpdateStatus={handleUpdateStatus} />
+      <BookList items={books || []} user={user} onUpdateStatus={handleUpdateStatus} /> */}
     </div>
   );
 };
