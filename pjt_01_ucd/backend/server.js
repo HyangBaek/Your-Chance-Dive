@@ -13,6 +13,10 @@ app.use(express.json());
 app.use(express.static('public'));
 
 const db = new sqlite3.Database('./database.sqlite');
+const itemssQueries = require('./queries/itemsQueries');
+const salesQueries = require('./queries/salesQueries');
+const usersQueries = require('./queries/usersQueries');
+const booksQueries = require('./queries/booksQueries');
 
 // 파일 업로드를 위한 multer 설정
 const storage = multer.diskStorage({
@@ -268,6 +272,55 @@ app.get('/api/search', (req, res) => {
     res.json(rows);
   });
 })
+
+// 교재 등록 라우트
+app.post('/api/book', [authenticateToken, upload.single('image')], (req, res) => {
+  const title = req.body.title || 'Unnamed Item';
+  const price = req.body.price || 0;
+  const description = req.body.description || 'No description available';
+  const image = req.file ? `/uploads/${req.file.filename}` : '';
+  const createdAt = new Date().toISOString();
+  // 값이 없을 경우 NULL로 처리
+  const author = req.body.author || null;
+  const isbn = req.body.isbn || null;
+  const publisher = req.body.publisher || null;
+  const edition = req.body.edition || null;
+
+  const sellerId = req.user.id; // 인증 토큰에서 추출
+
+  // 필수 입력값 검증
+  if (!title) {
+    return res.status(400).json({
+      error: 'Title are required fields.'
+    });
+  }
+
+  // 데이터베이스에 삽입
+  db.run(booksQueries.insertBook,
+  [title, price, description, image, createdAt, author, isbn, publisher, edition, sellerId],
+  function(err) {
+    if (err) {
+      console.error('Error inserting item:', err.message);
+      return res.status(500).json({ error: err.message });
+    }
+    console.log('/api/book 02');
+    // 성공 응답
+    const newBook = { id: this.lastID, title, price, description, image, createdAt, author, isbn, publisher, edition, sellerId };
+    res.status(201).json(newBook);
+    console.log('New book added:', newBook);
+  });
+});
+
+// 전체 목록 가져오기 라우트 (인증 필요 없음)
+app.get('/api/books', (req, res) => {
+  db.all(booksQueries.getAllBooks, [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+    console.log('/api/books ok ', rows);
+  });
+});
 
 // 서버 시작
 app.listen(3000, () => {
