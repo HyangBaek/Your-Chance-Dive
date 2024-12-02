@@ -27,7 +27,9 @@ const Sideber = ({ user, setUser }) => {
                     <a href="#" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>My Events</a>
                     <a href="#" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>My Message</a>
                     <a href="/additem" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>판매 상품 등록</a>
-                    <a href="#" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>판매 중인 상품</a>
+                    <a href="/items" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>판매 중인 상품</a>
+                    <a href="/addbook" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>중고 도서 등록</a>
+                    <a href="/books" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>등록 도서 목록</a>
                     <a href="#" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>예약 중인 상품</a>
                     <a href="#" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>구매 완료 상품</a>
                     <a href="#" className="w3-bar-item w3-button w3-text-grey w3-hover-light-gray" onClick={() =>{closeNav()}}>판매 완료 상품</a>

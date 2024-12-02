@@ -1,11 +1,14 @@
 // MyPage.js
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fetchItems } from "../api/itemApi";
+import { fetchSales } from "../api/saleApi";
 import { hideParentElement } from './scripts/hide.js';
 import style from './style/MyPage.module.css';
 
 const MyPage = ({ user, setUser }) => {
     const [userInfo, setUserInfo] = useState(null);
+  const [items, setItems] = useState([]);
     const [userSales, setUserSales] = useState([]);
     const [userPurchases, setUserPurchases] = useState([]);
     const [activeTab, setActiveTab] = useState('Tab1');
@@ -17,33 +20,16 @@ const MyPage = ({ user, setUser }) => {
         if (user) {
             console.log("User:", user); // 로그로 user 객체 확인
             //fetchUserInfo();
+      fetchItems()
+        .then(setItems)
+        .catch((error) => console.error("Error:", error));
+
+      fetchSales()
+        .then(setUserSales)
+        .catch((error) => console.error("Error:", error));
         }
     }, [user]);
-  
-    // 사용자 정보 가져오기
-    // user에 있는 정보 사용
 
-    // 사용자 판매 내역 가져오기
-    const fetchUserSales = async () => {
-        try {
-            const response = await fetch(`http://localhost:3000/api/sales?sellerId=${user.id}`);
-            const data = await response.json();
-          setUserSales(data);
-        } catch (error) {
-            console.error('Error fetching user sales:', error);
-        }
-    };
-
-    // 사용자 구매 내역 가져오기
-    const fetchUserPurchases = async () => {
-        try {
-            const response = await fetch(`http://localhost:3000/api/purchases?buyerId=${user.id}`);
-            const data = await response.json();
-            setUserPurchases(data);
-        } catch (error) {
-            console.error('Error fetching user purchases:', error);
-        }
-    };
   const TabLink = ({ linkName, setActiveTab, children }) => {
     const handleClick = (evt) => { setActiveTab(linkName); };
     return (
@@ -136,7 +122,7 @@ const MyPage = ({ user, setUser }) => {
               <div className="w3-card w3-white w3-round w3-margin">
                 <div className="btn-group">
                   <button className={style.button}>거래 완료 0 건</button>
-                  <button className={style.button}>판매 중 5 건</button>
+                  <button className={style.button}>판매 중 {items.length} 건</button>
                   <button className={style.button}>거래 중 3 건</button>
                   <button className={style.button}>거래 취소 10건</button>
                 </div>
@@ -154,7 +140,8 @@ const MyPage = ({ user, setUser }) => {
                           <>
                             {userSales.map((sale) => (
                               <tr>
-                                <td key={sale.id}>{sale.itemName}</td><td>{sale.itemPrice}원</td>
+                                <td key={sale.id}>{sale.item_name || sale.book_title}</td>
+                                <td className={style.price}>{(sale.item_price ?? sale.book_price) === 0 ? "0원" : (sale.item_price ?? sale.book_price) ? (sale.item_price ?? sale.book_price) + "원" : ""}</td>
                               </tr>
                             ))}
                           </>
