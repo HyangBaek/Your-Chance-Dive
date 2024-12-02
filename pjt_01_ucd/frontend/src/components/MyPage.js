@@ -7,19 +7,20 @@ import { hideParentElement } from './scripts/hide.js';
 import style from './style/MyPage.module.css';
 
 const MyPage = ({ user, setUser }) => {
-    const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const [items, setItems] = useState([]);
-    const [userSales, setUserSales] = useState([]);
-    const [userPurchases, setUserPurchases] = useState([]);
-    const [activeTab, setActiveTab] = useState('Tab1');
-    const spanRef = useRef(null);
+  const [userSales, setUserSales] = useState([]);
+  const [userPurchases, setUserPurchases] = useState([]);
+  const [activeTab, setActiveTab] = useState('Tab1');
+  const navigate = useNavigate();
+  const spanRef = useRef(null);
 
-    useEffect(() => {
-      setActiveTab('Tab1'); // 기본적으로 첫 번째 탭을 활성화합니다.
+  useEffect(() => {
+    setActiveTab('Tab1'); // 기본적으로 첫 번째 탭을 활성화합니다.
 
-        if (user) {
-            console.log("User:", user); // 로그로 user 객체 확인
-            //fetchUserInfo();
+    if (user) {
+      console.log("User:", user); // 로그로 user 객체 확인
+      //fetchUserInfo();
       fetchItems()
         .then(setItems)
         .catch((error) => console.error("Error:", error));
@@ -29,6 +30,16 @@ const MyPage = ({ user, setUser }) => {
         .catch((error) => console.error("Error:", error));
         }
     }, [user]);
+
+  const handleCellClick = (type, id) => {
+    // 상세 페이지로 이동
+    if(type==='item') {
+      navigate(`/items/${id}`);
+    } else {
+      navigate(`/books/${id}`);
+    }
+
+  };
 
   const TabLink = ({ linkName, setActiveTab, children }) => {
     const handleClick = (evt) => { setActiveTab(linkName); };
@@ -40,8 +51,8 @@ const MyPage = ({ user, setUser }) => {
     <div id={linkName} className="myLink" style={{ display: activeTab === linkName ? 'block' : 'none' }}> {children}
     </div>
   );
-    return (
-        <>
+  return (
+    <>
       <div className={style}>
         <div className="w3-container w3-content" style={{ maxWidth: '1400px', marginTop: '80px' }}>
           <div className="w3-row">
@@ -121,10 +132,10 @@ const MyPage = ({ user, setUser }) => {
               </div>
               <div className="w3-card w3-white w3-round w3-margin">
                 <div className="btn-group">
+                  <button className={style.button}>판매 중 {userSales.length} 건</button>
+                  <button className={style.button}>거래 중 0 건</button>
+                  <button className={style.button}>거래 취소 0건</button>
                   <button className={style.button}>거래 완료 0 건</button>
-                  <button className={style.button}>판매 중 {items.length} 건</button>
-                  <button className={style.button}>거래 중 3 건</button>
-                  <button className={style.button}>거래 취소 10건</button>
                 </div>
               </div>
 
@@ -137,14 +148,24 @@ const MyPage = ({ user, setUser }) => {
                       <thead><tr><th>상품명</th><th>가격</th></tr></thead>
                       <tbody>
                         {userSales.length > 0 ? (
-                          <>
-                            {userSales.map((sale) => (
-                              <tr>
-                                <td key={sale.id}>{sale.item_name || sale.book_title}</td>
-                                <td className={style.price}>{(sale.item_price ?? sale.book_price) === 0 ? "0원" : (sale.item_price ?? sale.book_price) ? (sale.item_price ?? sale.book_price) + "원" : ""}</td>
+                          userSales.map((sale) => {
+                            const saleId = sale.item_id ?? sale.book_id; // item_id 또는 book_id를 사용
+                            const saleType = sale.item_id ? "item" : "book"; // item/book 구분
+
+                            return (
+                              <tr
+                                key={`${saleType}-${saleId}`} // 고유 key 설정
+                                onClick={() => handleCellClick(saleType, saleId)} // 상세 페이지 이동 핸들러
+                                style={{ cursor: "pointer" }}>
+                                <td>{sale.item_name || sale.book_title}</td>
+                                <td className={style.price}>
+                                  {(sale.item_price ?? sale.book_price) === 0
+                                    ? "0원"
+                                    : `${sale.item_price ?? sale.book_price}원`}
+                                </td>
                               </tr>
-                            ))}
-                          </>
+                            );
+                          })
                         ) : (
                           <tr><td colSpan="2">판매 내역이 없습니다.</td></tr>
                         )}

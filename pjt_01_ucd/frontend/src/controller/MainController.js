@@ -34,7 +34,7 @@ const MainController = ({ user, setUser }) => {
       <Route path="/" element={<Main user={user} setUser={setUser} />} />
       <Route path="/main" element={<MainPage user={user} setUser={setUser} />} />
       <Route path="/items" element={<ItemList user={user} />} />
-      <Route path="/items/:id" element={<ItemDetail user={user} />} />
+      <Route path="/items/:id" element={<ItemDetail items={items} user={user} />} />
       <Route path="/additem" element={<ItemForm user={user} onAddItem={handleAddItem} />} />
       <Route path="/books" element={<BookList user={user} onAddBook={handleAddBook} />} />
       <Route path="/books/:id" element={<ItemDetail user={user} />} />
