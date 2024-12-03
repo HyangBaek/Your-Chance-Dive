@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { hideParentElement } from './scripts/hide.js';
+import { Link } from 'react-router-dom';
 import ItemList from './ItemList.js';
-import ItemForm from './ItemForm.js';
+import { fetchItems } from "../api/itemApi";
 import Slider from './Slider.js';
 
 const MainPage = ({ user, setUser }) => {
-  const [userInfo, setUserInfo] = useState(null);
   const [userSales, setUserSales] = useState([]);
-  const [userPurchases, setUserPurchases] = useState([]);
   const [activeTab, setActiveTab] = useState('Tab1');
-  const spanRef = useRef(null);
   const [items, setItems] = useState([]);
   const [currentItem, setCurrentItem] = useState(null);
   const [view, setView] = useState('items');
@@ -19,23 +15,17 @@ const MainPage = ({ user, setUser }) => {
 
     if (user) {
       console.log("User:", user); // 로그로 user 객체 확인
-      //fetchUserInfo();
+      fetchItems()
+        .then(setItems)
+        .catch((error) => console.error("Error:", error));
     }
   }, [user]);
 
-  // 사용자 정보 가져오기
-  // user에 있는 정보 사용
-
-  // 사용자 판매 내역 가져오기
-  const fetchUserSales = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/api/sales?sellerId=${user.id}`);
-      const data = await response.json();
-      setUserSales(data);
-    } catch (error) {
-      console.error('Error fetching user sales:', error);
-    }
+  const handleLogin = (data) => {
+    console.log('User logged in:', data);
+    // 로그인 후 추가 작업 수행
   };
+
   const TabLink = ({ linkName, setActiveTab, children }) => {
     const handleClick = (evt) => { setActiveTab(linkName); };
     return (
@@ -46,15 +36,6 @@ const MainPage = ({ user, setUser }) => {
     <div id={linkName} className="myLink" style={{ display: activeTab === linkName ? 'block' : 'none' }}> {children}
     </div>
   );
-  const fetchItems = async () => {
-    try {
-      const response = await fetch('http://localhost:3000/api/items');
-      const data = await response.json();
-      setItems(data);
-    } catch (error) {
-      console.error('Error fetching items:', error);
-    }
-  };
 
   const handleUpdateStatus = async (itemId, status) => {
     try {
@@ -86,15 +67,15 @@ const MainPage = ({ user, setUser }) => {
       <div className="nav" style={{ width: '90%', marginTop: '80px' }}>
 
         <ul className="nav" >
-          <li><a className="w3-button w3-block w3-theme-l1 w3-right-align" style={{ width: '200px' }}>
+          <li><Link to="" className="w3-button w3-block w3-theme-l1 w3-right-align" style={{ width: '200px' }}>
             <i className="fa fa-circle-o-notch fa-fw w3-margin-left"></i> 스소
-          </a></li>
-          <li><a className="w3-button w3-block w3-theme-l2 w3-left-align">
+          </Link></li>
+          <li><Link to="" className="w3-button w3-block w3-theme-l2 w3-left-align">
             <i className="fa fa-circle-o-notch fa-fw w3-margin-right"></i> 스기
-          </a></li>
-          <li><a className="w3-button w3-block w3-theme-l3 w3-left-align">
+          </Link></li>
+          <li><Link to="" className="w3-button w3-block w3-theme-l3 w3-left-align">
             <i className="fa fa-circle-o-notch fa-fw w3-margin-right"></i> 스전
-          </a></li>
+          </Link></li>
         </ul></div>
       <Slider /> {/* Slider 컴포넌트를 사용합니다. */}
 
